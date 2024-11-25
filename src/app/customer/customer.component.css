@@ -1,0 +1,27 @@
+.header {
+    background: #575dab;
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    height: 60px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1002;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+}
+.page-title-box {
+    margin-left: 15px; /* Adjust spacing between logo and title */
+}
+h3{
+    color: white;
+}
+.form-group{
+    
+}
+
+
+

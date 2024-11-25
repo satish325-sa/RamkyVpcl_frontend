@@ -1,0 +1,97 @@
+<nav class="bg-customBlue h-16  flex justify-items-center">
+    <div class="flex">
+        <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
+        <h3 class=" text-white font-circular text-2xl pl-4 pt-4 pr-40">Welcome</h3>
+    </div>    
+        
+    <div class="flex justify-items-center">
+        <ul class="flex pt-5">
+            <li><a href="#" class="text-white font-bold mx-20 pt-4">Vpcl Details</a></li>
+            <li class="relative group">
+                <a href="#" class="text-white font-bold mx-20 pt-4">Customer Details</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Customer Register</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Customer Details</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">SubCustomer Details</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Tank Details</a></li>
+                </ul>
+            </li>  <!-- 
+            <li><a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a></li> -->
+            <li class="relative group">
+                <a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Admin Register</a></li>
+                </ul>
+            </li>
+            
+            <li class="relative group ">
+                <a href="#" class="text-white font-bold mx-20 pt-4">VPCL</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">My Profile</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Change Password</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- <div class="flex items-end">
+        <a href="#" class="text-white font-bold mx-20 pt-4  ">VPCL</a>
+    </div> -->
+</nav>
+<div class="grid grid-cols-2 gap-4 mx-16 my-8">
+    <input type="hidden" id="hdnID" value="@ViewBag.Id" />
+
+    <div>
+        <label for="txtCustomerName" class="block text-lg font-medium">Customer Name (<span class="text-red-600">*</span>)</label>
+        <input type="text" id="txtCustomerName" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+    </div>
+
+    <div>
+        <label for="txtEmailId" class="block text-lg font-medium">Email ID (<span class="text-red-600">*</span>)</label>
+        <input type="text" id="txtEmailId" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+        <span id="spEmail" class="hidden text-red-600">Please Enter Valid Email</span>
+    </div>
+
+    <div>
+        <label for="txtCustomerId" class="block text-lg font-medium">Customer ID (<span class="text-red-600">*</span>)</label>
+        <input type="text" id="txtCustomerId" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" onkeypress="return isNumberKey(event)" />
+    </div>
+
+    <div>
+        <label for="ddlrole" class="block text-lg font-medium">Role ID</label>
+        <select id="ddlrole" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
+            <option value="1">User</option>
+            <!-- <option value="2">Admin</option> -->
+        </select>
+    </div>
+
+    <div>
+        <label for="txt_htd_CFO" class="block text-lg font-medium">HTDs CFO Quantity</label>
+        <input type="text" id="txt_htd_CFO" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+    </div>
+
+    <div>
+        <label for="ddlzone" class="block text-lg font-medium">Zone</label>
+        <select id="ddlzone" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
+            <option value="0">Select</option>
+            <option value="1">Zone A</option>
+            <option value="2">Zone B</option>
+            <option value="3">Zone C</option>
+            <option value="4">Outside Customer</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="txt_ltds_CFO" class="block text-lg font-medium">LTDs CFO Quantity</label>
+        <input type="text" id="txt_ltds_CFO" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+    </div>
+
+    <div>
+        <label for="ckid" class="block text-lg font-medium">Sub Customer</label>
+        <input id="ckid" type="checkbox" class="h-5 w-5 rounded-md border-gray-300" />
+    </div>
+
+    <div class="col-span-2 flex justify-center">
+        <button type="button" class="bg-customBlue text-white py-3 px-6 rounded-xl" id="btnAdd" onclick="return Add_Customer();">Submit</button>
+    </div>
+</div>

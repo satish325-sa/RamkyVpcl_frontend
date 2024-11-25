@@ -1,0 +1,138 @@
+<div class="bg-customBlue h-16 flex items-center">
+    <a>
+        <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
+    </a>
+    <h3 class="p-5 text-white font-circular text-2xl">Welcome</h3>
+</div>
+
+<div class="grid grid-cols-2 gap-4 mx-16 my-8">
+    <div>
+        <label for="txtName" class="block text-lg font-medium">Mode of Supply (<span class="text-red-600">*</span>)</label>
+        <select
+          id="txtName"
+          [(ngModel)]="modeOfSupply"
+          (change)="onModeOfSupplyChange(modeOfSupply)"
+          class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+        >
+          <option value="0">Select</option>
+          <option value="1">Pipe Line</option>
+          <option value="2">Tankers</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="txttype" class="block text-lg font-medium">Effluent Type (<span class="text-red-600">*</span>)</label>
+        <select
+            id="txttype"
+            [(ngModel)]="effluentType"
+            (change)="onEffluentTypeChange(effluentType)"
+            class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+            >
+            <option value="0">Select</option>
+            <option value="1">HTDS</option>
+            <option value="2">LTDS</option>
+            <option value="3">CHROMIUM</option>
+            <option value="4">CYNIDE</option>
+            <option value="5">SEWAGE</option>
+        </select>
+    </div>
+
+    <div *ngIf="!isTankDisabled">
+        <label for="txtTankno" class="block text-lg font-medium">
+          Tank No (<span class="text-red-600">*</span>)
+        </label>
+        <select
+            id="txtTankno"
+            [(ngModel)]="selectedTank"
+            (change)="onTankNumberChange(selectedTank)"
+            class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+            >
+            <option value="">Select</option>
+            <option *ngFor="let tank of filteredTankNumbers" [value]="tank">{{ tank }}</option>
+        </select>
+      </div>
+      
+      <div *ngIf="!isTankDisabled">
+        <label for="txttankcapcity" class="block text-lg font-medium">Tank Capacity</label>
+        <input
+          type="text"
+          id="txttankcapcity"
+          [(ngModel)]="tankCapacity"
+          class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+          readonly
+        />
+    </div>
+      
+  
+            
+      
+      
+    <div>
+        <label for="txtQuantity" class="block text-lg font-medium">Quantity (<span class="text-red-600">*</span>)</label>
+        <input type="number" id="txtQuantity" (keypress)="isNumberKey($event)"    [(ngModel)]="quantity" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" onkeypress="return isNumberKey(event)" />
+    </div>
+
+    <div>
+        <label for="txtPh" class="block text-lg font-medium">pH Value (<span class="text-red-600">*</span>)</label>
+        <input type="number" id="txtPh"   [(ngModel)]="phValue" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10  text-lg rounded-md" max="4" autocomplete="off" onkeypress="return isNumberKey(event)" />
+    </div>
+
+    <div>
+        <label for="txtPresentlevelcm" class="block text-lg font-medium">
+            Conveyance Date (<span class="text-red-600">*</span>)
+        </label>
+        <input
+            type="date"
+            id="txtPresentlevelcm"   [(ngModel)]="conveyanceDate"
+            class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+        />
+    </div>
+    
+
+    <div>
+        <label for="txtyzc" class="block text-lg font-medium">Sub Customer</label>
+        <select id="txtyzc" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"></select>
+    </div>
+
+
+    <div class="text-center col-span-2">
+        <button class="bg-customBlue text-white py-3 px-6 rounded-md" (click)="onSubmit()">Create</button>
+    </div>
+    <div class="text-right col-span-2">
+        <button class="bg-customBlue text-white py-3 px-6 rounded-lg">Export to Excel</button>
+    </div>
+    
+</div>
+<div class="w-screen my-0">
+    <div class="bg-white shadow rounded-lg mb-4">
+        <div class="p-4">
+            <div class="overflow-x-auto">
+                <table id="tblTimeSheet" class="w-full bg-white border border-gray-200">
+                    <thead class="bg-gray-50 border-b">
+                        <tr>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-12">S.No</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Ticket</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-28">Mode of Supply</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Effluent Type</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest Quantity</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Conveyance Requested Date</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Created Date</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank No</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank Capacity</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Received Quantity</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">CpH</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">TpH</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status Date</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <!-- Your table data rows will go here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

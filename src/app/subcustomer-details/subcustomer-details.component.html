@@ -1,0 +1,97 @@
+
+<nav class="bg-customBlue h-16  flex justify-items-center">
+    <div class="flex">
+        <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
+        <h3 class=" text-white font-circular text-2xl pl-4 pt-4 pr-40">Welcome</h3>
+    </div>    
+        
+    <div class="flex justify-items-center">
+        <ul class="flex pt-5">
+            <li><a href="#" class="text-white font-bold mx-20 pt-4">Ticket Details</a></li>
+            <li class="relative group">
+                <a href="#" class="text-white font-bold mx-20 pt-4">Customer Details</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Customer Register</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Customer Details</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">SubCustomer Details</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Tank Details</a></li>
+                </ul>
+            </li>  <!-- 
+            <li><a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a></li> -->
+            <li class="relative group">
+                <a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Admin Register</a></li>
+                </ul>
+            </li>
+            
+            <li class="relative group ">
+                <a href="#" class="text-white font-bold mx-20 pt-4">VPCL</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">My Profile</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Change Password</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- <div class="flex items-end">
+        <a href="#" class="text-white font-bold mx-20 pt-4  ">VPCL</a>
+    </div> -->
+</nav>
+<div class="grid grid-cols-2 gap-4 mx-16 my-8">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="txtName" class="block text-lg font-medium">Customer Name (<span class="text-red-600">*</span>)</label>
+            <select id="txtName" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
+                <option value="0">select</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="txtsubcusId" class="block text-lg font-medium">Sub Customer Id (<span class="text-red-600">*</span>)</label>
+            <input type="text" id="txtsubcusId" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" onkeypress="return isNumberKey(event)" maxlength="8" />
+        </div>
+    </div>
+
+   
+</div>
+<div class="col-12 text-center my-4">
+    <button type="button" class="bg-customBlue text-white py-2 px-4 rounded-3xl" id="btnAdd" onclick="return Insert_Subcustomer();">Submit</button>
+    <button type="button" class="bg-customBlue text-white py-2 px-4 rounded-3xl" id="btnupdate" onclick="return Update_subcustomer();" style="display:none">Update</button>
+</div>
+
+<div class=" text-end  mr-2  page-header my-4">
+    <div class="row align-items-center">
+        <div class="col-auto ml-auto">
+            <input type="button" class="bg-customBlue text-white py-2 px-4 rounded-3xl" value="Export to Excel" id="btnExport" />
+        </div>
+    </div>
+</div>
+<div class="container ml-12 my-0">
+    <div class="w-full">
+        <div class="bg-white shadow rounded-lg mb-4">
+            <div class="p-4">
+                <div class="overflow-x-auto">
+                    <table id="tbltank" class="min-w-full bg-white border border-gray-200">
+                        <thead class="bg-gray-50 border-b">
+                            <tr>
+                                <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-12">S.No</th>
+                                <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Customer Name</th>
+                                <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Sub Customer</th>
+                                <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <!-- Your table data rows will go here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

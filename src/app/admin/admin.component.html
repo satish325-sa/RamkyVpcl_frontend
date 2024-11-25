@@ -1,0 +1,104 @@
+
+<nav class="bg-customBlue h-16 flex flex-col md:flex-row md:justify-items-center">
+
+    <div class="flex">
+        <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
+        <h3 class=" text-white font-circular text-2xl pl-4 pt-4 pr-40">Welcome</h3>
+    </div>    
+        
+    <div class="flex justify-items-center">
+        <ul class="flex pt-5">
+            <li><a href="#" class="text-white font-bold mx-20 pt-4">Ticket Details</a></li>
+            <li class="relative group">
+                <a href="#" class="text-white font-bold mx-20 pt-4">Customer Details</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="'/customerregister'">Customer Register</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Customer Details</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="'subcustomerdetails'">SubCustomer Details</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="'/tankmaster'">Tank Details</a></li>
+                </ul>
+            </li> 
+            <li class="relative group">
+                <a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Admin Register</a></li>
+                </ul>
+            </li>
+            
+            <li class="relative group  px-40">
+                <a href="#" class="text-white font-bold mx-20 pt-4">VPCL</a>
+                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">My Profile</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Change Password</a></li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+   
+</nav>
+<div class="grid grid-cols-2 gap-4 mx-16 my-8">
+    <div>
+        <label for="txtName" class="block text-lg font-medium">Customer Name</label>
+        <select id="txtName" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
+            <option value="0">select</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="ddl_status" class="block text-lg font-medium">Status <span class="text-red-600"></span></label>
+        <select id="ddl_status" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
+            <option value="0">Select</option>
+            <option value="1">Pending</option>
+            <option value="3">Accepted</option>
+            <option value="4">Rejected</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="txt_fromdate" class="block text-lg font-medium">From date (<span class="text-red-600">*</span>)</label>
+        <input id="txt_fromdate" type="date" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+    </div>
+
+    <div>
+        <label for="txt_Todate" class="block text-lg font-medium">To date (<span class="text-red-600">*</span>)</label>
+        <input id="txt_Todate" type="date" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+    </div>
+    <div class=" flex justify-end gap-2 text-center col-span-2">
+        <button class="bg-customBlue text-white py-3 px-6 rounded-3xl">Download Excel</button>
+        <button class="bg-customBlue text-white py-3 px-6 rounded-3xl">Search</button>
+    </div>
+</div>
+<div class="w-screen">
+    <div class="bg-white shadow rounded-lg mb-4">
+        <div class="p-4">
+            <div class="overflow-x-auto">
+                <table id="tblTimeSheet" class="w-full bg-white border border-gray-200">
+                    <thead class="bg-gray-50 border-b">
+                        <tr>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-12">S.No</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Ticket</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-28">Mode of Supply</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Effluent Type</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest Quantity</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Conveyance Requested Date</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Created Date</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank No</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank Capacity</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Received Quantity</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">CpH</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">TpH</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status Date</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status</th>
+                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <!-- Your table data rows will go here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
