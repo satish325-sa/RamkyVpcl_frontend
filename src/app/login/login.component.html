@@ -3,20 +3,26 @@
         <div class="px-6 pt-6">
             <img src="assets/images/VPCL Logo.PNG" class="mx-auto  mt-20 w-[350px] h-[150px]" alt="">
         </div>
-        <div class="mt-4 bg-white shadow-md rounded-lg text-left w-15 ml-20 mr-20 h-600">
+        <div class="mt-4 bg-white shadow-md rounded-lg text-left w-15 mx-20 h-600">
            
             <div class="h-20 text-center bg-customBlue rounded-t-sm mt-8">
-                <h1 class="text-white py-6 text-[28px]">LOG IN</h1>
+                <h3 class="text-white py-6 text-[28px]">LOG IN</h3>
             </div>
             <div class="py-4 px-6">
                 <label class="block font-semibold text-center">USER NAME</label>
-                <input type="text" class="border w-full h-15 px-3 py-3 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-sm">
+                <input type="text" [(ngModel)]="username" name="username" class="border w-full h-15 px-3 py-3 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-sm" required>
+                <div *ngIf="username && username.length === 0" class="text-red-500 text-sm">
+                    Username is required.
+                </div>
                 <label class="block font-semibold text-center mt-5">PASSWORD</label>
-                <input type="text" class="border w-full h-15 px-3 py-3 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-sm">
+                <input type="password"  [(ngModel)]="password" name="password" class="border w-full h-15 px-3 py-3 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded-sm" required>
+                <div *ngIf="password && password.length === 0" class="text-red-500 text-sm">
+                    Password is required.
+                </div>
             </div>
             <div class="text-center">
                 <button type="submit" class="bg-customBlue text-white rounded-md ml-3 px-3 py-3" (click)="signin()">SIGN IN</button><br><br>
-                <a href="#" class="text-sm ml-10 mt-5 mr-12 mb-5">Forgot password?</a>
+                <a href="#" class="text-sm ml-10 mt-5 mr-12 mb-5 text-red-500" [routerLink]="'/forgotpassword'">Forgot password?</a>
                 <div class="flex justify-end ">
                     <p class="ml-55 mt-4">Powered by</p>
                     <img src="assets/images/sharvi-logo.png"  class="w-[120px] h-[60px]" alt="">

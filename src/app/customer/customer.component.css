@@ -19,9 +19,41 @@
 h3{
     color: white;
 }
-.form-group{
+
+
+
+
+
+/* Ensure DataTable borders and colors apply */
+table.dataTable {
+    border: 2px solid #e5e7eb; /* Gray border (Tailwind's gray-200) */
+  }
+  
+  table.dataTable thead {
+    background: linear-gradient(to right, bg-customBlue, bg-customBlue); /* Gradient from teal-400 to teal-600 */
+  }
+  
+  table.dataTable tbody tr:hover {
     
-}
+  }
+  
+  table.dataTable td, table.dataTable th {
+    border-bottom: 2px solid #e5e7eb; /* Tailwind's gray-200 for bottom borders */
+    padding: 16px; /* Corresponds to Tailwind's px-6 py-4 */
+    color: #4a5568; /* Tailwind's gray-700 for text */
+  }
+
+  /* Ensure DataTable columns have right border */
+  table.dataTable th, table.dataTable td {
+    border-right: 2px solid #e5e7eb; /* Tailwind gray-200 */
+  }
+  
+  /* Remove right border from last column */
+  table.dataTable th:last-child, table.dataTable td:last-child {
+    border-right: none;
+  }
+  
+  
 
 
 

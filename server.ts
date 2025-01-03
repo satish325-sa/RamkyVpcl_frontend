@@ -14,6 +14,16 @@ export function app(): express.Express {
 
   const commonEngine = new CommonEngine();
 
+   // Set global timeout for requests
+   server.use((req, res, next) => {
+    // Timeout set to 60 seconds (60000 ms)
+    res.setTimeout(60000, () => {
+      console.log('Request timed out');
+      res.status(408).send('Request Timeout');
+    });
+    next();
+  });
+
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 

@@ -5,13 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { PasswordChangeComponent } from '../password-change/password-change.component';
 
 @Component({
-  selector: 'app-customer-register',
+  selector: 'app-admin-register',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './customer-register.component.html',
-  styleUrl: './customer-register.component.css'
+  templateUrl: './admin-register.component.html',
+  styleUrl: './admin-register.component.css'
 })
-export class CustomerRegisterComponent {
+export class AdminRegisterComponent {
   constructor(private router: Router,private dialog: MatDialog) {}
   logout() {
     
@@ -39,3 +39,4 @@ export class CustomerRegisterComponent {
     });
   } 
 }
+

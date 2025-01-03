@@ -1,138 +1,352 @@
-<div class="bg-customBlue h-16 flex items-center">
-    <a>
-        <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
-    </a>
-    <h3 class="p-5 text-white font-circular text-2xl">Welcome</h3>
+<div class="bg-customBlue h-16 flex items-center ">
+  <a>
+      <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
+  </a>
+  <p class=" text-white font-circular text-2xl pt-4 pl-4">Welcome   {{customerName}}</p>
+  <div class="ml-auto flex space-x-6">
+      <!-- Password Change Icon -->
+      <button class="text-white hover:text-green-500" (click)="openPasswordChangeDialog()">
+          <i class="fas fa-key text-xl"></i>
+      </button>
+
+      <!-- Logout Icon (Power Symbol) -->
+      <button class="text-white hover:text-red-600 p-5 " (click)="logout()">
+          <i class="fas fa-power-off text-xl"></i>
+      </button>
+  </div>
 </div>
+
 
 <div class="grid grid-cols-2 gap-4 mx-16 my-8">
-    <div>
-        <label for="txtName" class="block text-lg font-medium">Mode of Supply (<span class="text-red-600">*</span>)</label>
-        <select
-          id="txtName"
-          [(ngModel)]="modeOfSupply"
-          (change)="onModeOfSupplyChange(modeOfSupply)"
+  <!-- Mode of Supply -->
+  <div>
+      <label for="txtName" class="block text-lg font-medium">
+          Mode of Supply (<span class="text-red-600">*</span>)
+      </label>
+      <select
+        id="txtName"
+        [(ngModel)]="modeOfSupply"
+        #modeOfSupplyField="ngModel"
+        (change)="onModeOfSupplyChange(modeOfSupply)"
+        required
+        class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+      >
+        <option value="0">Select</option>
+        <option value="1">Pipe Line</option>
+        <option value="2">Tankers</option>
+      </select>
+      <div 
+        class="text-red-500 text-sm" 
+        *ngIf="modeOfSupplyField.touched && modeOfSupply === '0'"
+      >
+        Mode of Supply is required.
+      </div>
+  </div>
+
+  <!-- Effluent Type -->
+  <div>
+      <label for="txttype" class="block text-lg font-medium">
+          Effluent Type (<span class="text-red-600">*</span>)
+      </label>
+      <select
+          id="txttype"
+          [(ngModel)]="effluentType"
+          #effluentTypeField="ngModel"
+          (change)="onEffluentTypeChange()"
+          required
           class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
-        >
+      >
           <option value="0">Select</option>
-          <option value="1">Pipe Line</option>
-          <option value="2">Tankers</option>
-        </select>
-    </div>
+          <option value="1">HTDS</option>
+          <option value="2">LTDS</option>
+          <option value="3">CHROMIUM</option>
+          <option value="4">CYNIDE</option>
+          <option value="5">SEWAGE</option>
+      </select>
+      <div 
+        class="text-red-500 text-sm"
+        *ngIf="effluentTypeField.touched && effluentType === '0'"
+      >
+        Effluent Type is required.
+      </div>
+  </div>
 
-    <div>
-        <label for="txttype" class="block text-lg font-medium">Effluent Type (<span class="text-red-600">*</span>)</label>
-        <select
-            id="txttype"
-            [(ngModel)]="effluentType"
-            (change)="onEffluentTypeChange(effluentType)"
-            class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
-            >
-            <option value="0">Select</option>
-            <option value="1">HTDS</option>
-            <option value="2">LTDS</option>
-            <option value="3">CHROMIUM</option>
-            <option value="4">CYNIDE</option>
-            <option value="5">SEWAGE</option>
-        </select>
-    </div>
+  <!-- Tank No -->
+  <div *ngIf="!isTankDisabled">
+    <label for="txtTankno" class="block text-lg font-medium">
+        Tank No (<span class="text-red-600">*</span>)
+    </label>
+    <select
+        id="txtTankno"
+        [(ngModel)]="selectedTank"
+        #selectedTankField="ngModel"
+        (change)="onTankSelect(selectedTank)"
+        required
+        class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+    >
+        <option value="">Select</option>
+        <option *ngFor="let tank of tankDetails" [value]="tank.ZZTANKNO">
+            {{ tank.ZZTANKNO }}
+        </option>
+    </select>
+</div>
 
-    <div *ngIf="!isTankDisabled">
-        <label for="txtTankno" class="block text-lg font-medium">
-          Tank No (<span class="text-red-600">*</span>)
-        </label>
-        <select
-            id="txtTankno"
-            [(ngModel)]="selectedTank"
-            (change)="onTankNumberChange(selectedTank)"
-            class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
-            >
-            <option value="">Select</option>
-            <option *ngFor="let tank of filteredTankNumbers" [value]="tank">{{ tank }}</option>
-        </select>
+  <div *ngIf="!isTankDisabled">
+      <label for="txttankcapcity" class="block text-lg font-medium">Tank Capacity</label>
+      <input
+        type="text"
+        id="txttankcapcity"
+        [(ngModel)]="tankCapacity"
+        class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+        readonly
+      />
+  </div>
+
+
+  <!-- Quantity -->
+  <div>
+      <label for="txtQuantity" class="block text-lg font-medium">
+          Quantity (<span class="text-red-600">*</span>)
+      </label>
+      <input 
+        type="number" 
+        id="txtQuantity"
+        [(ngModel)]="quantity" 
+        #quantityField="ngModel"
+        required 
+        class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" 
+      />
+      <!-- Validation: Quantity is required -->
+      <div 
+        class="text-red-500 text-sm"
+        *ngIf="quantityField.touched && !quantity"
+      >
+          Quantity is required.
+      </div>
+      <!-- Validation: Quantity should be less than or equal to Tank Capacity -->
+      <div 
+        class="text-red-500 text-sm"
+        *ngIf="quantityField.touched && quantity && tankCapacity && quantity > +tankCapacity"
+      >
+          Quantity should not exceed the Tank Capacity ({{ tankCapacity }}).
+      </div>
+  </div>    
+
+  <!-- pH Value -->
+  <div>
+      <label for="txtPh" class="block text-lg font-medium">
+          pH Value (<span class="text-red-600">*</span>)
+      </label>
+      <input 
+          type="number" 
+          id="txtPh"
+          [(ngModel)]="phValue"
+          #phValueField="ngModel"
+          required
+          min="6.5"
+          max="8.5" 
+          class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+      />
+      <!-- Required Field Validation -->
+      <div 
+          class="text-red-500 text-sm"
+          *ngIf="phValueField.touched && !phValue"
+      >
+          pH Value is required.
+      </div>
+      <!-- Range Validation -->
+      <div 
+          class="text-red-500 text-sm"
+          *ngIf="phValueField.touched && phValue !== null && phValue !== undefined && (phValue < 6.5 || phValue > 8.5)"
+      >
+          Please enter pH in between 6.5 to 8.5.
+      </div>
+
+
+  </div>
+  
+
+  <!-- Conveyance Date -->
+  <div>
+      <label for="txtPresentlevelcm" class="block text-lg font-medium">
+          Conveyance Date (<span class="text-red-600">*</span>)
+      </label>
+      <input
+      type="date"
+      id="txtPresentlevelcm"
+      [(ngModel)]="conveyanceDate"
+      #conveyanceDateField="ngModel"
+      required
+      [min]="minDate"
+      [max]="maxDate"
+      (keydown)="blockTyping($event)" 
+      class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+     
+  />
+      <div 
+        class="text-red-500 text-sm"
+        *ngIf="conveyanceDateField.touched && !conveyanceDate"
+      >
+        Conveyance Date is required.
+      </div>
+  </div>
+
+  <!-- Sub Customer -->
+  <div>
+      <label for="txtyzc" class="block text-lg font-medium">Sub Customer</label>
+      <select 
+        id="txtyzc" 
+        class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+      >
+        <option value="">Select</option>
+      </select>
+  </div>
+  <div>
+    <p><strong><u>Note</u></strong>: Actual treatment of Requested, Approved Quantities of effluent may vary as per the site conditions, which is not guaranteed and VPCL shall not be held liable for any such variations.</p>
+
+  </div>
+
+  <!-- Buttons -->
+   
+  <div class="text-center col-span-2">
+      <button class="bg-customBlue text-white py-3 px-8 rounded-3xl hover:bg-green-500" (click)="onSubmit()" [disabled]="isSubmitting" >Create</button>
+  </div>
+
+  <div class="text-right col-span-2">
+      <button (click)="exportToExcel()" class="bg-customBlue text-white py-3 px-8 rounded-3xl hover:bg-green-500">Export to Excel</button>
+  </div>
+</div>
+
+<div class="w-screen my-0">
+  <div class="bg-white shadow rounded-lg mb-4">
+    <div class="p-4">
+      <div class="overflow-x-auto">
+        <table id="tblTimeSheet" class="min-w-full bg-white border-2 border-black-200 shadow-lg">
+          <thead class="bg-gradient-to-r from-customBlue text-white border-y-2">
+            <tr>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-12">S.No</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Ticket</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-28">Mode of Supply</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Effluent Type</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest Quantity</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Conveyance Requested Date</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Created    Date</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank No</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank Capacity</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Received Quantity</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">CpH</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">TpH</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status Date</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status</th>
+              <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Action</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            <!-- Loop through data and populate table rows -->
+            <tr *ngFor="let ticket of ticketDetails?.responseData?.data; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{ ticket?.ZZTICKETNO }}</td>
+              <td>{{ ticket?.ZZMODE_SUPPLY }}</td>
+              <td>{{ ticket?.ZZEFFUENT_TYPE }}</td>
+              <td>{{ ticket?.ZZMANIFEST }}</td>
+              <td>{{ ticket?.ZZMANIFEST_QTY }}</td>
+              <td>{{ ticket?.ZZCNVDAT | date:'dd-MM-yyyy' }}</td>
+              <td>{{ ticket?.ZZCNVDAT | date:'dd-MM-yyyy' }}</td>
+              <td>{{ ticket?.ZZTANKNO }}</td>
+              <td>{{ ticket?.ZZTANK_CAP }}</td>
+              <td>{{ ticket?.ZZQTY_RECVED }}</td>
+              <td>{{ ticket?.ZZPH }}</td>
+              <td>{{ ticket?.ZZAPH }}</td>
+              <td></td>
+              <td>
+                <ng-container *ngIf="ticket?.ZZAPPROV === 'P'">Pending</ng-container>
+                <ng-container *ngIf="ticket?.ZZAPPROV === 'A'">Accepted</ng-container>
+                <ng-container *ngIf="ticket?.ZZAPPROV === 'OP'">OnProcess</ng-container>
+                <ng-container *ngIf="ticket?.ZZAPPROV === 'OH'">On Hold</ng-container>
+                <ng-container *ngIf="ticket?.ZZAPPROV === 'C'">Created</ng-container>
+                <ng-container *ngIf="ticket?.ZZAPPROV === 'R'">Rejected</ng-container>
+              </td>
+              
+              <td>
+                <!-- Only show the edit button if ZZQTY_RECVED >= 1 and ZZMANIFEST_QTY < 1 and ZZMANIFEST < 1 -->
+                <ng-container *ngIf="ticket?.ZZQTY_RECVED >= 1 && ticket?.ZZMANIFEST_QTY < 1 && ticket?.ZZMANIFEST < 1">
+                  <button (click)="openManifestModal(ticket)">
+                    <span  style="color: #575DAB;">Enter Manifest No</span>
+                  </button>
+                </ng-container>
+              </td>
+              
+              
+              
+             
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal for Manifest Update -->
+<div *ngIf="isManifestModalVisible" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <h2 class="text-xl font-semibold mb-4">Manifest</h2>
+    <form (ngSubmit)="updateManifest()">
+      <!-- Ticket No - Readonly -->
+      <div class="mb-4">
+        <label for="ticketNo" class="block text-sm font-medium text-gray-600">Ticket No</label>
+        <input 
+          type="text" 
+          id="ticketNo" 
+          name="ticketNo" 
+          [(ngModel)]="ticketno" 
+          class="w-full border border-gray-300 p-2 rounded-lg" 
+          readonly 
+        />
       </div>
       
-      <div *ngIf="!isTankDisabled">
-        <label for="txttankcapcity" class="block text-lg font-medium">Tank Capacity</label>
-        <input
-          type="text"
-          id="txttankcapcity"
-          [(ngModel)]="tankCapacity"
-          class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
-          readonly
+      <!-- Status Date - Readonly -->
+      <div class="mb-4">
+        <label for="statusDate" class="block text-sm font-medium text-gray-600">Status Date</label>
+        <input 
+          type="date" 
+          id="statusDate" 
+          name="statusDate" 
+          [(ngModel)]="statusdate" 
+          class="w-full border border-gray-300 p-2 rounded-lg" 
+          readonly 
         />
-    </div>
-      
-  
-            
-      
-      
-    <div>
-        <label for="txtQuantity" class="block text-lg font-medium">Quantity (<span class="text-red-600">*</span>)</label>
-        <input type="number" id="txtQuantity" (keypress)="isNumberKey($event)"    [(ngModel)]="quantity" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" onkeypress="return isNumberKey(event)" />
-    </div>
+      </div>
 
-    <div>
-        <label for="txtPh" class="block text-lg font-medium">pH Value (<span class="text-red-600">*</span>)</label>
-        <input type="number" id="txtPh"   [(ngModel)]="phValue" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10  text-lg rounded-md" max="4" autocomplete="off" onkeypress="return isNumberKey(event)" />
-    </div>
-
-    <div>
-        <label for="txtPresentlevelcm" class="block text-lg font-medium">
-            Conveyance Date (<span class="text-red-600">*</span>)
-        </label>
-        <input
-            type="date"
-            id="txtPresentlevelcm"   [(ngModel)]="conveyanceDate"
-            class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"
+      <!-- Manifest Quantity - Editable -->
+      <div class="mb-4">
+        <label for="manifestQty" class="block text-sm font-medium text-gray-600">Manifest Quantity</label>
+        <input 
+          type="number" 
+          id="manifestQty" 
+          name="manifestQty" 
+          [(ngModel)]="manifestqty" 
+          class="w-full border border-gray-300 p-2 rounded-lg" 
         />
-    </div>
-    
+      </div>
 
-    <div>
-        <label for="txtyzc" class="block text-lg font-medium">Sub Customer</label>
-        <select id="txtyzc" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md"></select>
-    </div>
+      <!-- Manifest - Editable -->
+      <div class="mb-4">
+        <label for="manifest" class="block text-sm font-medium text-gray-600">Manifest</label>
+        <input 
+          type="text" 
+          id="manifest" 
+          name="manifest" 
+          [(ngModel)]="manifest" 
+          class="w-full border border-gray-300 p-2 rounded-lg" 
+        />
+      </div>
 
-
-    <div class="text-center col-span-2">
-        <button class="bg-customBlue text-white py-3 px-6 rounded-md" (click)="onSubmit()">Create</button>
-    </div>
-    <div class="text-right col-span-2">
-        <button class="bg-customBlue text-white py-3 px-6 rounded-lg">Export to Excel</button>
-    </div>
-    
+      <div class="flex justify-end">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Update</button>
+        <button type="button" (click)="closeManifestModal()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>
-<div class="w-screen my-0">
-    <div class="bg-white shadow rounded-lg mb-4">
-        <div class="p-4">
-            <div class="overflow-x-auto">
-                <table id="tblTimeSheet" class="w-full bg-white border border-gray-200">
-                    <thead class="bg-gray-50 border-b">
-                        <tr>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-12">S.No</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Ticket</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600 w-28">Mode of Supply</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Effluent Type</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Manifest Quantity</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Conveyance Requested Date</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Created Date</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank No</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Tank Capacity</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Received Quantity</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">CpH</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">TpH</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status Date</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Status</th>
-                            <th class="text-left px-4 py-2 text-sm font-medium text-gray-600">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white">
-                        <!-- Your table data rows will go here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+

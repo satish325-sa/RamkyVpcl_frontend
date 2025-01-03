@@ -1,42 +1,50 @@
-<nav class="bg-customBlue h-16  flex justify-items-center">
-    <div class="flex">
-        <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
-        <h3 class=" text-white font-circular text-2xl pl-4 pt-4 pr-40">Welcome</h3>
+<nav class="bg-customBlue h-16 flex flex-col md:flex-row md:justify-center items-center">
+    <div class="flex items-center">
+        <img src="assets/images/VPCL Logo.PNG" class="w-64 h-16" />
+        <p class="text-white font-circular text-2xl pl-4 pt-4">Welcome</p>
     </div>    
-        
-    <div class="flex justify-items-center">
-        <ul class="flex pt-5">
-            <li><a href="#" class="text-white font-bold mx-20 pt-4">Ticket Details</a></li>
+
+    <div class="flex justify-center w-full">
+        <!-- Added flex-nowrap to prevent wrapping of menu items -->
+        <ul class="flex flex-nowrap space-x-36 pt-2 ">
+            <li><a [routerLink]="['/admin']"   class="text-white font-bold">Ticket Details</a></li>
             <li class="relative group">
-                <a href="#" class="text-white font-bold mx-20 pt-4">Customer Details</a>
-                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Customer Register</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Customer Details</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">SubCustomer Details</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Tank Details</a></li>
+                <a [routerLink]="['/customerdetails']" routerLinkActive="router-link-active"  class="text-white font-bold">Customer Details <span class="text-white ml-2"><i class="fas fa-chevron-down"></i></span></a>
+                <ul class="absolute hidden group-hover:block bg-white text-black p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap">
+                        <a [routerLink]="'/customerregister'">Customer Register</a>
+                    </li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap">
+                        <a [routerLink]="''">Customer Details</a>
+                    </li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap">
+                        <a [routerLink]="'/subcustomerdetails'">SubCustomer Details</a>
+                    </li>
+                   
                 </ul>
-            </li>  <!-- 
-            <li><a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a></li> -->
+                
+            </li> 
             <li class="relative group">
-                <a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a>
-                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Admin Register</a></li>
+                <a href="#" class="text-white font-bold">Admin Details <span class="text-white ml-2"><i class="fas fa-chevron-down"></i></span></a>
+                <ul class="absolute hidden group-hover:block bg-white text-black p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap"><a [routerLink]="'/'">Admin Register</a></li>
                 </ul>
             </li>
-            
-            <li class="relative group ">
-                <a href="#" class="text-white font-bold mx-20 pt-4">v</a>
-                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">My Profile</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Change Password</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a href="#">Log out</a></li>
-                </ul>
-            </li>
+
+           
         </ul>
     </div>
-    <!-- <div class="flex items-end">
-        <a href="#" class="text-white font-bold mx-20 pt-4  ">VPCL</a>
-    </div> -->
+    <div class="ml-auto flex space-x-6">
+        <!-- Password Change Icon -->
+        <button class="text-white hover:text-green-500" (click)="openPasswordChangeDialog()">
+            <i class="fas fa-key text-xl"></i>
+        </button>
+
+        <!-- Logout Icon (Power Symbol) -->
+        <button class="text-white hover:text-red-600 p-5 " (click)="logout()">
+            <i class="fas fa-power-off text-xl"></i>
+        </button>
+    </div>
 </nav>
 <div class="grid grid-cols-2 gap-4 mx-16 mt-8 mb-0">
     <input type="hidden" id="hdnID" />

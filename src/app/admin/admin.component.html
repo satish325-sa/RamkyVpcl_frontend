@@ -1,74 +1,99 @@
-
-<nav class="bg-customBlue h-16 flex flex-col md:flex-row md:justify-items-center">
-
-    <div class="flex">
-        <img src="assets/images/VPCL Logo.PNG" class="w-48 h-16" />
-        <h3 class=" text-white font-circular text-2xl pl-4 pt-4 pr-40">Welcome</h3>
+<nav class="bg-customBlue h-16 flex flex-col md:flex-row md:justify-center items-center">
+    <div class="flex items-center">
+        <img src="assets/images/VPCL Logo.PNG" class="w-64 h-16" />
+        <p class="text-white font-circular text-2xl pl-4 pt-4">Welcome {{customerName}}</p>
     </div>    
-        
-    <div class="flex justify-items-center">
-        <ul class="flex pt-5">
-            <li><a href="#" class="text-white font-bold mx-20 pt-4">Ticket Details</a></li>
+
+    <div class="flex justify-center w-full">
+        <!-- Added flex-nowrap to prevent wrapping of menu items -->
+        <ul class="flex flex-nowrap space-x-36 pt-2 ">
+            <li><a href="#" class="text-white font-bold">Ticket Details</a></li>
             <li class="relative group">
-                <a href="#" class="text-white font-bold mx-20 pt-4">Customer Details</a>
-                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="'/customerregister'">Customer Register</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Customer Details</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="'subcustomerdetails'">SubCustomer Details</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="'/tankmaster'">Tank Details</a></li>
+                <a [routerLink]="['customerdetails']" class="text-white font-bold">Customer Details <span class="text-white ml-2"><i class="fas fa-chevron-down"></i></span></a>
+                <ul class="absolute hidden group-hover:block bg-white text-black p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap">
+                        <a [routerLink]="'/customerregister'">Customer Register</a>
+                    </li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap">
+                        <a [routerLink]="'/customerdetails'">Customer Details</a>
+                    </li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap">
+                        <a [routerLink]="'/subcustomerdetails'">SubCustomer Details</a>
+                    </li>
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap">
+                        <a [routerLink]="'/tankmaster'">Tank Details</a>
+                    </li>
                 </ul>
+                
             </li> 
             <li class="relative group">
-                <a href="#" class="text-white font-bold mx-20 pt-4">Admin Details</a>
-                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Admin Register</a></li>
+                <a href="#" class="text-white font-bold">Admin Details <span class="text-white ml-2"><i class="fas fa-chevron-down"></i></span></a>
+                <ul class="absolute hidden group-hover:block bg-white text-black p-2 rounded shadow-lg">
+                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white whitespace-nowrap"><a [routerLink]="'/adminregister'">Admin Register</a></li>
                 </ul>
             </li>
+
             
-            <li class="relative group  px-40">
-                <a href="#" class="text-white font-bold mx-20 pt-4">VPCL</a>
-                <ul class="absolute hidden group-hover:block bg-white text-black mt-4 p-2 rounded shadow-lg">
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">My Profile</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Change Password</a></li>
-                    <li class="px-4 py-2 hover:bg-customBlue hover:text-white"><a [routerLink]="''">Log out</a></li>
-                </ul>
-            </li>
         </ul>
     </div>
-   
+    <div class="ml-auto flex space-x-6">
+        <!-- Password Change Icon -->
+        <button class="text-white hover:text-green-500" (click)="openPasswordChangeDialog()">
+            <i class="fas fa-key text-xl"></i>
+        </button>
+
+        <!-- Logout Icon (Power Symbol) -->
+        <button class="text-white hover:text-red-600 p-5 " (click)="logout()">
+            <i class="fas fa-power-off text-xl"></i>
+        </button>
+    </div>
+    
 </nav>
+
+
+
+
 <div class="grid grid-cols-2 gap-4 mx-16 my-8">
     <div>
         <label for="txtName" class="block text-lg font-medium">Customer Name</label>
-        <select id="txtName" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
-            <option value="0">select</option>
-        </select>
-    </div>
-
-    <div>
-        <label for="ddl_status" class="block text-lg font-medium">Status <span class="text-red-600"></span></label>
-        <select id="ddl_status" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
+        <select 
+            id="txtName" 
+            [(ngModel)]="selectedCustomer"  
+             
+            class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
             <option value="0">Select</option>
-            <option value="1">Pending</option>
-            <option value="3">Accepted</option>
-            <option value="4">Rejected</option>
+            <option *ngFor="let customer of customerDetails" [value]="customer.CUSTOMERNAME">
+                {{ customer.CUSTOMERNAME }}
+            </option>
         </select>
     </div>
 
     <div>
-        <label for="txt_fromdate" class="block text-lg font-medium">From date (<span class="text-red-600">*</span>)</label>
-        <input id="txt_fromdate" type="date" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+        <label for="ddl_status" class="block text-lg font-medium">Status</label>
+        <select id="ddl_status" [(ngModel)]="status" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md">
+            <option value="0">Select</option>
+            <option value="P">Pending</option>
+            <option value="A">Accepted</option>
+            <option value="R">Rejected</option>
+        </select>
     </div>
 
     <div>
-        <label for="txt_Todate" class="block text-lg font-medium">To date (<span class="text-red-600">*</span>)</label>
-        <input id="txt_Todate" type="date" class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+        <label for="txt_fromdate" class="block text-lg font-medium">From date</label>
+        <input id="txt_fromdate" type="date" [(ngModel)]="fromDate"  class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
     </div>
-    <div class=" flex justify-end gap-2 text-center col-span-2">
-        <button class="bg-customBlue text-white py-3 px-6 rounded-3xl">Download Excel</button>
-        <button class="bg-customBlue text-white py-3 px-6 rounded-3xl">Search</button>
+
+    <div>
+        <label for="txt_Todate" class="block text-lg font-medium">To date</label>
+        <input id="txt_Todate" type="date" [(ngModel)]="toDate"  class="border border-gray-300 focus:ring-2 focus:ring-blue-500 w-full h-10 text-lg rounded-md" />
+    </div>
+
+    <div class="flex justify-end gap-2 text-center col-span-2">
+        <button class="bg-customBlue text-white py-3 px-6 rounded-3xl hover:bg-green-500">Download Excel</button>
+        <button class="bg-customBlue text-white py-3 px-6 rounded-3xl hover:bg-green-500" (click)="filterTickets()">Search</button>
     </div>
 </div>
+
 <div class="w-screen">
     <div class="bg-white shadow rounded-lg mb-4">
         <div class="p-4">
@@ -95,10 +120,74 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <!-- Your table data rows will go here -->
-                    </tbody>
+                        <!-- Loop through data and populate table rows -->
+                        <tr *ngFor="let ticket of tableData; let i = index">
+                            <!-- <tr *ngFor="let ticket of filteredTickets?.responseData?.data; let i = index"> -->
+                          <td>{{i + 1}}</td>
+                          <td>{{ ticket?.ZZTICKETNO }}</td>
+                          <td>{{ ticket?.ZZMODE_SUPPLY }}</td>
+                          <td>{{ ticket?.ZZEFFUENT_TYPE }}</td>
+                          <td>{{ ticket?.ZZMANIFEST }}</td>
+                          <td>{{ ticket?.ZZMANIFEST_QTY }}</td>
+                          <td>{{ ticket?.ZZCNVDAT| date:'dd-MM-yyyy'}}</td>
+                          <td>{{ ticket?.ZZCNVDAT| date:'dd-MM-yyyy'}}</td>
+                          <td>{{ ticket?.ZZTANKNO }}</td>
+                          <td>{{ ticket?.ZZTANK_CAP }}</td>
+                          <td>{{ ticket?.ZZQTY_RECVED }}</td>
+                          <td>{{ ticket?.ZZPH }}</td>
+                          <td>{{ ticket?.ZZAPH }}</td>
+                          <td></td>
+                          <td>
+                            <ng-container *ngIf="ticket?.ZZAPPROV === 'P'">Pending</ng-container>
+                            <ng-container *ngIf="ticket?.ZZAPPROV === 'A'">Accepted</ng-container>
+                            <ng-container *ngIf="ticket?.ZZAPPROV === 'OP'">OnProcess</ng-container>
+                            <ng-container *ngIf="ticket?.ZZAPPROV === 'OH'">On Hold</ng-container>
+                            <ng-container *ngIf="ticket?.ZZAPPROV === 'C'">Pending</ng-container>
+                            <ng-container *ngIf="ticket?.ZZAPPROV === 'R'">Rejected</ng-container>
+                          </td>
+                          <td>
+                            <!-- Check if ZZCNVDAT is the same as today's date -->
+                            <ng-container *ngIf="isDateSame(ticket?.ZZCNVDAT)">
+                              <button (click)="toggleForm(ticket)">
+                                <span class="material-icons" style="color: #575DAB;">edit</span>
+                              </button>
+                            </ng-container>
+                          </td>
+                         
+                        </tr>
+                      </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+ <!-- Modal/Form for updating status and other fields -->
+ <div *ngIf="isFormVisible" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-semibold mb-4">Update Ticket</h2>
+        <form (ngSubmit)="updateTicket()">
+            <div class="mb-4">
+                <label for="updatestatus" class="block text-sm font-medium text-gray-600">Status</label>
+                <select id="updatestatus" name="updatestatus" [(ngModel)]="updatestatus" class="w-full border border-gray-300 p-2 rounded-lg">
+                    <option value="P">Pending</option>
+                    <option value="A">Accepted</option>
+                    <option value="R">Rejected</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="tph" class="block text-sm font-medium text-gray-600">TpH</label>
+                <input type="number" id="tph" name="tph" [(ngModel)]="tph" class="w-full border border-gray-300 p-2 rounded-lg" />
+            </div>
+            <div class="mb-4">
+                <label for="approveQty" class="block text-sm font-medium text-gray-600">Approve Qty</label>
+                <input type="number" id="approveQty" name="approveQty" [(ngModel)]="approveQty" class="w-full border border-gray-300 p-2 rounded-lg" />
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Update</button>
+                <button type="button" (click)="closeForm()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

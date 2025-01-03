@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule,Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordChangeComponent } from '../password-change/password-change.component';
 
 @Component({
-  selector: 'app-customer-register',
+  selector: 'app-customer-details',
   standalone: true,
-  imports: [RouterModule],
-  templateUrl: './customer-register.component.html',
-  styleUrl: './customer-register.component.css'
+  imports: [RouterModule,FormsModule],
+  templateUrl: './customer-details.component.html',
+  styleUrl: './customer-details.component.css'
 })
-export class CustomerRegisterComponent {
+export class CustomerDetailsComponent {
   constructor(private router: Router,private dialog: MatDialog) {}
   logout() {
     
@@ -38,4 +39,5 @@ export class CustomerRegisterComponent {
       data: {}  // Pass data to the dialog if necessary
     });
   } 
+
 }
